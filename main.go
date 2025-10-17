@@ -25,4 +25,10 @@ func main() {
 	book1.ReturnBook()
 	fmt.Println(book1)
 	user1.AssignBook(&book1)
+
+	email := EmailNotifier{Email: "test@mail.ru"}
+	sms := SMSNotifier{PhoneNumber: "89289289898"}
+
+	email.Notify("test")
+	sms.Notify("test")
 }

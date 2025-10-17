@@ -69,5 +69,5 @@ func (b *Book) ReturnBook() {
 }
 
 func (r *Reader) AssignBook(b *Book) {
-	fmt.Printf("Читатель %s %s взял книгу %s(%s %d)", r.FirstName, r.LastName, b.Title, b.Author, b.Year)
+	fmt.Printf("Читатель %s %s взял книгу %s(%s %d)\n", r.FirstName, r.LastName, b.Title, b.Author, b.Year)
 }
