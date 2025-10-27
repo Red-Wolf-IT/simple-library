@@ -40,7 +40,7 @@ func (r *Reader) GetFullInfo() string {
 }
 
 func (b *Book) GetBookInfo() string {
-	return (b.Title + "(" + string(b.Year) + ", " + b.Author + ")")
+	return (b.Title + "(" + fmt.Sprintf("%d", b.Year) + ", " + b.Author + ")")
 }
 
 func (lib *Library) GetReaderFullNameByID(id int) (string, error) {
@@ -49,7 +49,7 @@ func (lib *Library) GetReaderFullNameByID(id int) (string, error) {
 			return r.FirstName + " " + r.LastName, nil
 		}
 	}
-	return "", fmt.Errorf("Человек с ID %s не найден", id)
+	return "", fmt.Errorf("человек с ID %d не найден", id)
 }
 
 func (lib *Library) GetReaderFullInfoByID(id int) (string, error) {
@@ -58,16 +58,16 @@ func (lib *Library) GetReaderFullInfoByID(id int) (string, error) {
 			return r.FirstName + " " + r.LastName + " (" + r.Phone + ")", nil
 		}
 	}
-	return "", fmt.Errorf("Человек с ID %s не найден", id)
+	return "", fmt.Errorf("человек с ID %d не найден", id)
 }
 
 func (lib *Library) GetBookInfoByID(id int) (string, error) {
 	for _, b := range lib.Books {
 		if b.ID == id {
-			return b.Title + "(" + string(b.Year) + ", " + b.Author + ")", nil
+			return b.Title + "(" + fmt.Sprintf("%d", b.Year) + ", " + b.Author + ")", nil
 		}
 	}
-	return "", fmt.Errorf("Книга с ID %s не найдена", id)
+	return "", fmt.Errorf("книга с ID %d не найдена", id)
 }
 
 // Добавление нового читателя
@@ -153,17 +153,17 @@ func (b *Book) String() string {
 // Привязка книги к читателю
 func (b *Book) IssueBook(r *Reader) (string, error) {
 	if b.IsIssued {
-		return "", fmt.Errorf("Книга %s уже используется.", b.GetBookInfo())
+		return "", fmt.Errorf("книга %s уже используется", b.GetBookInfo())
 	}
 	b.IsIssued = true
 	b.ReaderID = &r.ID
-	return fmt.Sprintf("Книга выдана читателю %s.\n", r.GetFullName()), nil
+	return fmt.Sprintf("книга выдана читателю %s.\n", r.GetFullName()), nil
 }
 
 // Отвязка книги от читателя
 func (b *Book) ReturnBook() error {
 	if !b.IsIssued {
-		return fmt.Errorf("Книга %s уже в библиотеке.", b.GetBookInfo())
+		return fmt.Errorf("книга %s уже в библиотеке", b.GetBookInfo())
 	}
 
 	b.IsIssued = false
@@ -219,5 +219,5 @@ func (lib *Library) ReturnBook(bookID int) error {
 		b.ReturnBook()
 	}
 
-	return fmt.Errorf("книга %s не найдена.", b.GetBookInfo())
+	return fmt.Errorf("книга %s не найдена", b.GetBookInfo())
 }
